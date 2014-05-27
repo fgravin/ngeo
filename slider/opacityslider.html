@@ -15,8 +15,11 @@
   </head>
   <body ng-controller="MainController">
     <div id="map" go-map go-map-map="map"></div>
-    <go-opacity-slider go-opacity-slider-layer="layer" ></go-opacity-slider>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.8/angular.min.js"></script>
-    <script src="slider.min.js"></script>
+    <div>
+        Layer opacity :
+        <go-opacity-slider go-opacity-slider-layer="layer" ></go-opacity-slider>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.10/angular.min.js"></script>
+    <script src="opacityslider.min.js"></script>
   </body>
 </html>
