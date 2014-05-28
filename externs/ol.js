@@ -58,3 +58,24 @@ ol.layer.Base.prototype.setOpacity = function(opacity) {};
  */
 ol.layer.Layer = function() {};
 
+/**
+ * @constructor
+ * @extends {ol.layer.Layer}
+ */
+ol.layer.Tile = function() {};
+
+/**
+ * @type {Object}
+ */
+ol.format = {};
+
+/**
+ * @constructor
+ */
+ol.format.WMSCapabilities = function() {};
+
+/**
+ * @param {Document|Node|string}
+ * @return {Object}
+ */
+ol.format.WMSCapabilities.prototype.read = function(data) {};
