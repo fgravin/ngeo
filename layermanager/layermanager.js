@@ -17,11 +17,10 @@
   module.value('decorateLayer',
 
       /**
-       * @param {ol.layer.Layer} layer Layer to decorate.
+       * @param {!ol.layer.Layer} layer Layer to decorate.
        * @param {ol.Map} map Map.
        */
       function(layer, map) {
-        goog.asserts.assertInstanceof(layer, ol.layer.Layer);
 
         Object.defineProperty(layer, 'active', {
           get: function() {
