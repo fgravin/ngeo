@@ -48,40 +48,44 @@
     function($scope, goDecorateLayer, decorateLayer) {
 
       /** @type {ol.Map} */
-      $scope.map = new ol.Map({
+      var map = new ol.Map({
         view: new ol.View({
           center: [-6655.5402445057125, 6709968.258934638],
           zoom: 11
         })
       });
+      $scope['map'] = map;
 
       /** @type {ol.layer.Layer} */
       var osm = new ol.layer.Tile({
+        id: 'osm',
+        label: 'OSM',
         source: new ol.source.OSM()
       });
-      osm.set('label', 'OSM');
       goDecorateLayer(osm);
-      decorateLayer(osm, $scope.map);
+      decorateLayer(osm, map);
 
       /** @type {ol.layer.Layer} */
       var mapQuest = new ol.layer.Tile({
+        id: 'mapquest',
+        label: 'MapQuest',
         source: new ol.source.MapQuest({layer: 'sat'})
       });
-      mapQuest.set('label', 'MapQuest');
       goDecorateLayer(mapQuest);
-      decorateLayer(mapQuest, $scope.map);
+      decorateLayer(mapQuest, map);
 
       /** @type {ol.layer.Layer} */
       var stamen = new ol.layer.Tile({
+        id: 'stamen',
+        label: 'Stamen',
         source: new ol.source.Stamen({
           layer: 'watercolor'
         })
       });
-      stamen.set('label', 'Stamen');
       goDecorateLayer(stamen);
-      decorateLayer(stamen, $scope.map);
+      decorateLayer(stamen, map);
 
-      $scope['layersDef'] = [osm, mapQuest, stamen];
+      $scope['layers'] = [osm, mapQuest, stamen];
     }]);
 })();
 
