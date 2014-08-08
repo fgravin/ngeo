@@ -84,6 +84,11 @@ goog.require('ol.source.MapQuest');
       goDecorateInteraction(drawLine, map);
       $scope['drawLine'] = drawLine;
 
+      /** @type {gox.BtnOptions} */
+      $scope['btnOptions'] = {
+        cls: 'customCls'
+      };
+
     }]);
 
 })();
