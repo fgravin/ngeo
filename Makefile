@@ -1,5 +1,5 @@
 SRC_JS_FILES := $(shell find src -type f -name '*.js')
-SRC_DIRECTIVES_PARTIALS_FILES := $(shell find src/directives -type f -name '*.html')
+SRC_DIRECTIVES_PARTIALS_FILES := $(shell find src/directives contribs/*/src/directives/ -type f -name '*.html')
 
 EXPORTS_JS_FILES := $(shell find exports -type f -name '*.js')
 
