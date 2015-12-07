@@ -180,3 +180,30 @@ For example, `goog.isDef` should be preferred over `angular.isDefined`. When
 using `goog.isDef` Closure Compiler will remove the call to `goog.isDef` and
 use code that is much smaller. In contrast, `angular.isDefined` is defined in
 the Angular externs file so it won't be changed by the compiler.
+
+See [ol3 guidelines](https://github.com/openlayers/ol3/blob/master/CONTRIBUTING.md#follow-openlayers-3s-coding-style)
+about the usage of goog in openlayers3 project. We want to follow those
+guidelines in `ngeo` as well.
+
+### Declaring an event
+
+When you declare an event on ol3 object, please use
+- the `goog.events.listen` syntax
+- the ol3 constant to identify the event
+
+This is wrong:
+
+```js
+this.geolocation_.on('change:accuracyGeometry', function() {
+  ...
+});  
+```
+
+This is the correct syntax:
+
+```js
+goog.events.listen(this.geolocation_,
+  ol.Object.getChangeEventType(ol.GeolocationProperty.ACCURACY_GEOMETRY),
+  function() {
+  }, false, this);
+```

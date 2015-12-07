@@ -350,3 +350,79 @@ Services that are objects (rather than numbers, strings, or functions) may need
 For now we don't use the `@api` annotation as in OpenLayers. We explicitly use
 `goog.exportProperty` in separate "exports" files. See the `exports` directory
 in the repo.
+
+### Running examples
+
+#### Local mode
+
+To run the examples locally, just run `make serve` and open your browser in
+`http://localhost:3000/examples/` uri.
+
+
+All extern javascript include must be defined in the example file, explicitly.
+
+```html
+  <script src="../node_modules/jquery/dist/jquery.js"></script>
+  <script src="../node_modules/angular/angular.js"></script>
+  <script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+```
+
+To include the example code and all its dependencies through `ngeo` and `ol3`
+you have to include the following tag:
+
+```html
+  <script src="/@?main=scaleselector.js"></script>
+```
+
+The `/@?main=scaleselector.js` will take the `scaleselector.js` file in the
+example folder and will load in debug mode all the dependency tree built with
+the `goog.require()` syntax.
+
+In local examples, you will have all javascripts files in debug mode of ol3 , 
+ngeo, contribs and goog files loaded.
+
+#### Examples in gh-pages
+
+When you execute the target `gh-pages`, the make file will create a folder 
+in your `.build` folder for *hosted_examples*. This folder match the examples
+folder, but some files are changed during the make to work on the github 
+gh-pages.
+
+##### Index file
+
+An `index.html` is created in `examples/` and `contribs/gmf/` to list
+all examples available in the library.
+
+##### External js files
+
+For example, all links to external js files are changed from 
+`../node_modules/angular/angular.js` to
+- `lib/angular.min.js` in ngeo examples
+- `../../lib/angular.min.js` in gmf examples
+
+##### ngeo js files
+
+In hosted examples, we use the standalone build of ngeo `ngeo.js` for ngeo 
+examples, and `gmf.js` for gmf examples.
+- `<script src="../../lib/gmf.js"></script>`
+- `<script src="lib/ngeo.js"></script>`
+
+##### examples js files
+
+The example source is finally added in debug mode. `/@?main=scaleselector.js` is
+changed to
+- `<script src="scaleselector.js"></script>` in ngeo
+- `<script src="locationchooser.js"></script>` in gmf
+
+So both are relative to the example folder.
+
+### GMF mobile application
+
+The GMF applications work the same way in local mode as the examples.
+But it is different for the hosted examples. As we want gmf applications to be
+a default instance of gmf ui, we want to build the whole application in
+advanced mode.
+
+`<script src="../../build/mobile.js"></script>`
+
+The build is done in `contribs/gmf/build/`.
