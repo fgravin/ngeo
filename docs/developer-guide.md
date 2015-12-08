@@ -426,3 +426,17 @@ advanced mode.
 `<script src="../../build/mobile.js"></script>`
 
 The build is done in `contribs/gmf/build/`.
+
+
+### Unit tests
+
+#### Writhing tests
+
+The unit tests are located in `test/spec/` and uses the [Jasmine Framework](http://jasmine.github.io/1.3/introduction.html).
+Please refer to the [AngularJS's unit-testing guide](https://docs.angularjs.org/guide/unit-testing) for
+how to write unit tests.
+
+#### Running tests
+
+To run the unit tests on the command line, just run `make test`. All the tests will be
+run inside [PhantomJS](http://phantomjs.org/).
