@@ -7,24 +7,24 @@ apply when you want to add a new feature.
 
 ## Main principle
 Before starting to code a new feature in gmf, you must determine if this feature
- is 100% gmf specific, or if the feature is generic and could be added to `ngeo` 
+ is 100% `gmf` specific, or if the feature is generic and could be added to `ngeo` 
  core. You also need to check in `ngeo` core and examples if you don't find
   anything that could fit with your needs.
  
  
-The main principle is to put everything you can in ngeo, and put in gmf only 
+The main principle is to put everything you can in `ngeo`, and put in `gmf` only 
 what is specific.
-When you develop into gmd contribs, you must consider that you are developing a
+When you develop into `gmf` contribs, you must consider that you are developing a
  client application, and try your best to extract from your code all things that
-  could go into ngeo, to shared with other projects.
-You must not consider that gmf is a real part of ngeo, and that there is no real
- importance to put your stuff into `ngeo` or gmf cores, it does. 
+  could go into `ngeo`, to shared with other projects.
+You must not consider that `gmf` is a real part of `ngeo`, and that there is no real
+ importance to put your stuff into `ngeo` or `gmf` cores, it does. 
 This point is essential to be sure `ngeo` is going in the good direction: 
 maintenable, reusable, evolving.
 
-## 1. Make your code generic in ngeo
-In ngeo, we want to have very generic code that will be shared between gmf and 
-other web map applications. When you add some code in ngeo, you need to follow 
+## 1. Make your code generic in `ngeo`
+In ngeo, we want to have very generic code that will be shared between `gmf` and 
+other web map applications. When you add some code in `ngeo`, you need to follow 
 some rules that helps the code to be easly usable and customisable.
 
 ### Avoid template when not needed.
@@ -155,7 +155,6 @@ ngeo.foobarDirective = function() {
     scope: true,
     bindToController: {
      prop1: '='
-     prop1: '='
     },
     controllerAs: 'myCtrl',
     templateUrl: …
@@ -167,17 +166,17 @@ ngeo.foobarDirective = function() {
 Here the `prop1` property of the parent scope will be bound to the `prop1` 
 property of the directive controller.
 
-## 2. Customize your code in gmf
+## 2. Customize your code in `gmf`
 
 ### Specific templates
 
-In gmf, if you are sure that all the UIs will use the exact same HTML view, 
+In `gmf`, if you are sure that all the UIs will use the exact same HTML view, 
 you can add templates to your directives, even small templates that just define 
 a button.
 
-Generally, if your widget could be in ngeo, you have to create a new directive
+Generally, if your widget could be in `ngeo`, you have to create a new directive
 with no template in `ngeo`, then to avoid to have too much HTML in the main 
-gmf view, you can create a new directive in gmf on top of the `ngeo` one, that
+`gmf` view, you can create a new directive in `gmf` on top of the `ngeo` one, that
 will just define a template including the `ngeo` directive.
 
 For example, the gmf directive `gmf-layertree` will declare a template that will
@@ -200,7 +199,7 @@ gmf.layertreeDirective = function() {
   };
 ```
 
-In general, when creating a new directive in gmf, you must rely as much as 
+In general, when creating a new directive in `gmf`, you must rely as much as 
 possible on `ngeo` core directives. For example in the layertree, it would
 make no sense to create a new directive from scratch, you must rely on `ngeo` 
 layer tree. 
@@ -210,7 +209,7 @@ in `ngeo`.
 
 ### Directive scoping
 
-In gmf, you are pretty sure of what template you want to bind to your directive.
+In `gmf`, you are pretty sure of what template you want to bind to your directive.
 Regarding this point, you are not under the constraint not to use an `isolate 
 scope`.
 
@@ -285,19 +284,19 @@ the expression in the context of the parent/user scope. There is no binding,
 just an expression, and we get the `foo` variable only once.
 
 Note:
-- if you need consistency, off course use the `'='` symbol.
+- if you need consistency, of course use the `'='` symbol.
 - if you need a one time binding to a string, use the `'@'` symbol.
 
-## Usage of goog
+## Usage of the closure-library
 
 See [ol3 guidelines](https://github.com/openlayers/ol3/blob/master/CONTRIBUTING.md#follow-openlayers-3s-coding-style)
-about the usage of goog in openlayers3 project. We want to follow those
+about the usage of `goog` in openlayers3 project. We want to follow those
 guidelines in `ngeo` as well.
 
 ### Declaring an event
 
 When you declare an event on ol3 object, please use
-- the `goog.events.listen` syntax
+- the `goog.events.listen` function
 - the ol3 constant to identify the event
 
 This is wrong:
