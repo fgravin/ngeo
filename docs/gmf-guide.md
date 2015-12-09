@@ -2,11 +2,11 @@
 
 The purpose of this guideline is to help the developper to contribute in the 
 best way to `ngeo` and `gmf` cores.
-It will describe the golbal philisophy of `ngeo` design, and set base rules to 
+It will describe the golbal philosophy of `ngeo` design, and set base rules to 
 apply when you want to add a new feature.
 
 ## Main principle
-Before starting to code a new feature in gmf, you must determine if this feature
+Before starting to code a new feature in `gmf`, you must determine if this feature
  is 100% `gmf` specific, or if the feature is generic and could be added to `ngeo` 
  core. You also need to check in `ngeo` core and examples if you don't find
   anything that could fit with your needs.
@@ -20,10 +20,10 @@ When you develop into `gmf` contribs, you must consider that you are developing 
 You must not consider that `gmf` is a real part of `ngeo`, and that there is no real
  importance to put your stuff into `ngeo` or `gmf` cores, it does. 
 This point is essential to be sure `ngeo` is going in the good direction: 
-maintenable, reusable, evolving.
+maintainable, reusable, evolving.
 
 ## 1. Make your code generic in `ngeo`
-In ngeo, we want to have very generic code that will be shared between `gmf` and 
+In `ngeo`, we want to have very generic code that will be shared between `gmf` and 
 other web map applications. When you add some code in `ngeo`, you need to follow 
 some rules that helps the code to be easly usable and customisable.
 
@@ -237,9 +237,9 @@ variable through scope inheritance.
  */
 ngeo.foobarDirective = function() {
   return {
-  scope: {
-    foo: '='
-  }
+    scope: {
+      foo: '='
+    }
 ```
 
 A declaration like the one above with the symbol `'='` will create an isolate 
@@ -261,11 +261,11 @@ as an object:
  */
 ngeo.foobarDirective = function() {
   return {
-  scope: {
-    fooFn: '&'
-  }
-  ...
-}
+    scope: {
+      fooFn: '&'
+    }
+    // …
+};
 
 /**
  * @constructor
@@ -285,7 +285,7 @@ just an expression, and we get the `foo` variable only once.
 
 Note:
 - if you need consistency, of course use the `'='` symbol.
-- if you need a one time binding to a string, use the `'@'` symbol.
+- if you need a one time binding to a string, use the `'&'` symbol.
 
 ## Usage of the closure-library
 
