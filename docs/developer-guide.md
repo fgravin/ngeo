@@ -96,9 +96,10 @@ the controller instance (`this`) or on the `$scope`. These properties are then
 referenced by their names in HTML pages and templates. So it is required to
 prevent the compiler from renaming these properties.
 
-The way to do that is to use the `[]` notation rather than the `.` notation
-when setting (and accessing) properties. For example if you need to set
-a property `foo` on the controller instance you should do as follows:
+The way to do that is to add the `@export` tag when declaring a variable;
+this will tell the compiler to not rename the variable.
+For example if you need to set a property `foo` on the controller instance
+you should do as follows:
 
 ```js
 /**
@@ -106,14 +107,15 @@ a property `foo` on the controller instance you should do as follows:
  * @ngInject
  */
 app.MainController = function() {
-  this['foo'] = 'bar';
+  
+  /**
+   * @type {string}
+   * @export
+   */
+  this.foo = 'bar';
   // …
 };
 ```
-
-The jshint linter, which we use for to check the ngeo code, complains when the
-`[]` notation is used. We set the `sub` jshint to `true` in a `.jshintrc` file
-to make jshint stay silent on that.
 
 ### Property renaming and directives
 
