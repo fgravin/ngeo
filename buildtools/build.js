@@ -1,13 +1,19 @@
-var fs = require('fs');
+/**
+ * This task builds OpenLayers with the Closure Compiler.
+ */
 var path = require('path');
 
 var async = require('async');
-var closure = require('closure-util');
+var closure = require('openlayers/node_modules/closure-util');
 var fse = require('fs-extra');
+var fs = require('graceful-fs');
 var nomnom = require('nomnom');
 var temp = require('temp').track();
 
+var generateExports = require('./generate-exports');
+
 var log = closure.log;
+var root = path.join(__dirname, '..');
 
 
 /**
@@ -17,6 +23,10 @@ var log = closure.log;
  */
 function assertValidConfig(config, callback) {
   process.nextTick(function() {
+    if (!Array.isArray(config.exports)) {
+      callback(new Error('Config missing "exports" array'));
+      return;
+    }
     if (config.namespace && typeof config.namespace !== 'string') {
       callback(new Error('Config "namespace" must be a string'));
       return;
@@ -65,20 +75,69 @@ function readConfig(configPath, callback) {
 
 
 /**
- * Get the list of sources sorted in dependency order.
- * @param {Array.<string>} src List of paths or patterns to source files.  By
- *     default, all .js files in the src directory are included.
- * @param {function(Error, Array.<string>)} callback Called with a list of paths
- *     or any error.
+ * Write the exports code to a temporary file.
+ * @param {string} exports Exports code.
+ * @param {function(Error, string)} callback Called with the path to the temp
+ *     file (or any error).
  */
-function getDependencies(src, callback) {
-  log.info('ol', 'Parsing dependencies');
-  closure.getDependencies({lib: src}, function(err, paths) {
+function writeExports(exports, callback) {
+  temp.open({prefix: 'exports', suffix: '.js'}, function(err, info) {
     if (err) {
       callback(err);
       return;
     }
-    callback(null, paths);
+    log.verbose('build', 'Writing exports: ' + info.path);
+    fs.writeFile(info.path, exports, function(err) {
+      if (err) {
+        callback(err);
+        return;
+      }
+      fs.close(info.fd, function(err) {
+        if (err) {
+          callback(err);
+          return;
+        }
+        callback(null, info.path);
+      });
+    });
+  });
+}
+
+
+/**
+ * Get the list of sources sorted in dependency order.
+ * @param {Object} config Build configuration object.
+ * @param {string} exports Exports code (with goog.exportSymbol calls).
+ * @param {function(Error, Array.<string>)} callback Called with a list of paths
+ *     or any error.
+ */
+function getDependencies(config, exports, callback) {
+  writeExports(exports, function(err, exportsPath) {
+    if (err) {
+      callback(err);
+      return;
+    }
+    log.info('ol', 'Parsing dependencies');
+    var options;
+    if (config.src) {
+      options = {
+        lib: config.src,
+        cwd: config.cwd
+      };
+    } else {
+      options = {
+        lib: ['src/**/*.js'],
+        cwd: root
+      };
+    }
+    closure.getDependencies(options, function(err, paths) {
+      if (err) {
+        callback(err);
+        return;
+      }
+      paths.push(exportsPath);
+      callback(null, paths);
+    });
   });
 }
 
@@ -110,19 +169,19 @@ function concatenate(paths, callback) {
  *     any error.
  */
 function build(config, paths, callback) {
-  var options = config.compile;
-  if (!options) {
+  var options = {
+    compile: config.compile,
+    cwd: config.cwd || root,
+    jvm: config.jvm
+  };
+  if (!options.compile) {
     log.info('ol', 'No compile options found.  Concatenating ' +
         paths.length + ' sources');
     concatenate(paths, callback);
   } else {
     log.info('ol', 'Compiling ' + paths.length + ' sources');
-    options.js = paths.concat(options.js || []);
-    if (config.jvm) {
-      closure.compile(options, config.jvm, callback);
-    } else {
-      closure.compile(options, callback);
-    }
+    options.compile.js = paths.concat(options.compile.js || []);
+    closure.compile(options, callback);
   }
 }
 
@@ -137,7 +196,8 @@ function build(config, paths, callback) {
 function main(config, callback) {
   async.waterfall([
     assertValidConfig.bind(null, config),
-    getDependencies.bind(null, config.src),
+    generateExports.bind(null, config),
+    getDependencies.bind(null, config),
     build.bind(null, config)
   ], callback);
 }

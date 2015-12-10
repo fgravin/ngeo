@@ -1,0 +1,176 @@
+gmf-map {
+  position: initial;
+  > div {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+}
+
+.ol-zoom {
+  background-color: transparent;
+  right: 0;
+  left: auto;
+  top: 52px;
+  margin: 10px;
+  button {
+    margin-bottom: 3px;
+    height: @map-tools-size;
+    width: @map-tools-size;
+    background-color: @map-tools-bg-color;
+    border: solid 1px @map-tools-color;
+    color: @map-tools-color;
+    &:hover {
+      background-color: @map-tools-bg-color;
+    }
+  }
+  &:hover {
+    background-color: transparent;
+  }
+}
+
+.ol-attribution {
+  display:none;
+}
+
+.ol-scale-line, .ol-scale-line-inner {
+  background-color: @map-tools-bg-color;
+  border-color: @map-tools-color;
+  border-width: 2px;
+  color: @map-tools-color;
+}
+
+.search {
+  top: @app-margin;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 6px 10px;
+  background-color: @map-tools-bg-color;
+  width: 162px + @map-tools-size + @map-tools-size;
+  border-radius: 25px;
+  border: solid 1px @map-tools-color;
+  z-index: @content-index;
+  input {
+    width: 150px;
+    padding: 0 5px;
+    border-width: 0 1px;
+    border-radius: 0;
+  }
+  .clear-button {
+    position: absolute;
+    top: @app-margin;
+    left: 0;
+    right: 0;
+    margin: -6px auto 0 158px;
+    width: 1.5em;
+    &:after {
+      content: 'e';
+      color: grey;
+      font-family: gmf-icons;
+      font-size: 1.5em;
+      font-weight: bold;
+      line-height: 0.5em;
+    }
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.nav-trigger {
+  top: @app-margin;
+  margin-top: 2px;
+  background-color: transparent;
+  border: none;
+  z-index: @above-content-index;
+}
+
+.nav-left-trigger {
+  margin-left: -104px;
+  &:after {
+    content: 'a';
+  }
+}
+
+.nav-right-trigger {
+  margin-left: 76px;
+  &:after {
+    content: 'd';
+  }
+}
+
+button[ngeo-mobile-geolocation] {
+  right: 13px;
+  top: 135px;
+  & button:after {
+    content: 'b'
+  }
+}
+
+//For tablet only
+@media (min-width: @screen-sm-min) {
+  main button:hover{
+    background-color: @onhover-color;
+  }
+
+  .ol-zoom {
+    top: auto;
+    bottom: 36px;
+    button:hover {
+      background-color: @onhover-color;
+    }
+  }
+
+  .search {
+    left: 26px + @map-tools-size;
+    padding: 3px 10px;
+    right: auto;
+    height: @map-tools-size;
+    width: 200px;
+    input {
+      width: 150px;
+      margin: 0;
+      border: none;
+    }
+    &:before {
+      content: 'c';
+      float: left;
+      font-family: gmf-icons;
+      color: grey;
+      font-size: 1.5em;
+      line-height: 0.6em;
+      width: 0.5em;
+    }
+    .clear-button {
+      margin: -8px auto 0 170px;
+    }
+  }
+
+  .nav-trigger {
+    top: @app-margin;
+    margin: 0;
+    background-color: @map-tools-bg-color;
+    border: solid 1px @map-tools-color;
+  }
+
+  .nav-left-trigger {
+    left: @app-margin;
+  }
+
+  .nav-right-trigger {
+    left: auto;
+    right: @app-margin;
+  }
+
+  button[ngeo-mobile-geolocation] {
+    bottom: 12px;
+    top: auto;
+    & button:after {
+      content: 'b'
+    }
+  }
+}

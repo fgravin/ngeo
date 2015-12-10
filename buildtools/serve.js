@@ -1,7 +1,7 @@
 var path = require('path');
 var url = require('url');
 
-var closure = require('closure-util');
+var closure = require('openlayers/node_modules/closure-util');
 var nomnom = require('nomnom');
 
 var log = closure.log;
@@ -31,9 +31,12 @@ var manager = new closure.Manager({
   closure: true, // use the bundled Closure Library
   lib: [
     'src/**/*.js',
-    'node_modules/openlayers/src/**/*.js'
+    'contribs/**/src/**/*.js',
+    'externs/*.js',
+    'node_modules/openlayers/src/**/*.js',
+    'node_modules/openlayers/build/ol.ext/*.js'
   ],
-  main: 'examples/*.js'
+  main: ['examples/*.js', 'contribs/**/examples/*.js', 'contribs/**/apps/**/*.js']
 });
 manager.on('error', function(e) {
   log.error('ngeo', e.message);
