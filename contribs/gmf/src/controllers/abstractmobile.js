@@ -15,6 +15,9 @@ goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
+goog.require('gmf.Themes');
+goog.require('gmf.mapDirective');
+goog.require('gmf.mobileBackgroundLayerSelectorDirective');
 goog.require('gmf.mobileNavDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.proj.EPSG21781');
@@ -43,7 +46,6 @@ gmfModule.constant(
     'gmfTreeUrl',
     'https://geomapfish-demo.camptocamp.net/2.0/wsgi/themes?' +
         'version=2&background=background');
-
 
 
 /**
@@ -125,14 +127,12 @@ gmf.AbstractMobileController = function(
    * @export
    */
   this.map = new ol.Map({
-    layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
-      })
-    ],
+    layers: [],
     view: new ol.View({
-      center: [0, 0],
-      zoom: 2
+      center: [632464, 185457],
+      projection: ol.proj.get('epsg:21781'),
+      minZoom: 3,
+      zoom: 3
     }),
     controls: [
       new ol.control.ScaleLine(),

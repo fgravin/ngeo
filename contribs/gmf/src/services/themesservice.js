@@ -10,6 +10,10 @@ goog.require('gmf');
 goog.require('goog.array');
 goog.require('goog.asserts');
 goog.require('goog.events.EventTarget');
+goog.require('ol.format.WMTSCapabilities');
+goog.require('ol.layer.Tile'); // tmp
+goog.require('ol.source.OSM'); // tmp
+goog.require('ol.source.WMTS');
 
 
 /**
@@ -35,15 +39,29 @@ gmf.ThemesEventType = {
  * @extends {goog.events.EventTarget}
  * @param {angular.$http} $http Angular http service.
  * @param {string} gmfTreeUrl URL to "themes" web service.
+ * @param {angular.$q} $q Angular q service
  * @ngInject
  * @ngdoc service
  * @ngname gmfThemes
  */
-gmf.Themes = function($http, gmfTreeUrl) {
+gmf.Themes = function($http, gmfTreeUrl, $q) {
 
   goog.base(this);
 
   /**
+   * @type {boolean}
+   * @private
+   */
+  this.initialized_ = false;
+
+  /**
+   * @type {angular.$q}
+   * @private
+   */
+  this.$q_ = $q;
+
+  /**
+   * @type {string}
    * @type {angular.$http}
    * @private
    */
@@ -96,26 +114,75 @@ gmf.Themes.findTheme_ = function(themes, themeName) {
  * @return {angular.$q.Promise} Promise.
  */
 gmf.Themes.prototype.getBgLayers = function() {
+
   goog.asserts.assert(!goog.isNull(this.promise_));
   return this.promise_.then(goog.bind(
       /**
        * @param {gmf.ThemesResponse} data The "themes" web service response.
-       * @return {Array.<Object>} Array of background layer objects.
+       * @return {angular.$q.Promise}
        */
       function(data) {
-        var bgLayers = data['background_layers'].map(goog.bind(function(item) {
-          goog.asserts.assert('name' in item);
-          goog.asserts.assert('imageType' in item);
+        var promises = data['background_layers'].map(function(item) {
+          var deferred = this.$q_.defer();
+          this.$http_.get(item.url, {
+            cache: false
+          }).then(
+              goog.bind(
+                  function(deferred, item, response) {
+                    // TODO - we could use the layer helper here to create
+                    //        the layers...
 
-          // create an ol.layer from the json spec
-          // use a future layer factory shared with the layertree
-          //return layer;
+                    var layer = null;
+                    // WMTS
+                    if (item['type'] === 'WMTS') {
+                      var parser = new ol.format.WMTSCapabilities();
+                      var result = parser.read(response.data);
+                      var options = ol.source.WMTS.optionsFromCapabilities(
+                          result,
+                          {
+                            layer: item.name,
+                            requestEncoding: 'REST'
+                          });
+                      layer = new ol.layer.Tile({
+                        'label': item['name'],
+                        'metadata': item['metadata'],
+                        'source': new ol.source.WMTS(options)
+                      });
+                    }
 
-          return item;
-        }, this));
+                    // TODO - Support WMS
 
-        // add the blank layer ???
-        return bgLayers;
+                    deferred.resolve(layer);
+                  },
+                  this,
+                  deferred,
+                  item
+              ),
+              goog.bind(function(deferred) {
+                deferred.resolve(null);
+              }, this, deferred)
+          );
+          return deferred.promise;
+        }, this);
+        return this.$q_.all(promises);
+      }, this))
+
+    .then(goog.bind(function(values) {
+        var layers = [];
+
+        // (1) add a blank layer
+        layers.push(new ol.layer.Tile({
+          'label': 'blank',
+          'metadata': {'thumbnail': ''}
+        }));
+
+        // (2) add layers that were returned by the capabilities reading
+        values.forEach(function(item) {
+          if (item) {
+            layers.push(item);
+          }
+        });
+        return layers;
       }, this));
 };
 
