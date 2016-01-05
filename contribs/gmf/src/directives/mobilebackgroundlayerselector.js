@@ -39,10 +39,9 @@ gmf.mobileBackgroundLayerSelectorDirective = function(
   return {
     restrict: 'E',
     scope: {
-      'getMobileMapFn': '&gmfMobileBackgroundLayerSelectorMap',
-      'getMobileBackgroundLayerSelectorOptionsFn':
-          '&gmfMobileBackgroundLayerSelectorOptions'
+      'map': '=gmfMobileBackgroundLayerSelectorMap'
     },
+    bindToController: true,
     controller: 'GmfMobileBackgroundLayerSelectorController',
     controllerAs: 'ctrl',
     templateUrl: gmfMobileBackgroundLayerSelectorTemplateUrl
@@ -57,7 +56,6 @@ gmfModule.directive('gmfMobileBackgroundLayerSelector',
 
 /**
  * @constructor
- * @param {angular.Scope} $scope The directive's scope.
  * @param {ngeo.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
  *     manager.
  * @param {gmf.Themes} gmfThemes Themes service.
@@ -67,16 +65,13 @@ gmfModule.directive('gmfMobileBackgroundLayerSelector',
  * @ngname GmfMobileBackgroundLayerSelectorController
  */
 gmf.MobileBackgroundLayerSelectorController = function(
-    $scope, ngeoBackgroundLayerMgr, gmfThemes) {
-
-  var map = $scope['getMobileMapFn']();
-  goog.asserts.assertInstanceof(map, ol.Map);
+    ngeoBackgroundLayerMgr, gmfThemes) {
 
   /**
-   * @type {!ol.Map}
-   * @private
+   * @type {ol.Map}
+   * @export
    */
-  this.map_ = map;
+  this.map;
 
   /**
    * @type {ol.layer.Base}
@@ -113,7 +108,7 @@ gmf.MobileBackgroundLayerSelectorController = function(
       this.backgroundLayerMgr_,
       ngeo.BackgroundEventType.CHANGE,
       function() {
-        this.bgLayer = this.backgroundLayerMgr_.get(this.map_);
+        this.bgLayer = this.backgroundLayerMgr_.get(this.map);
       },
       false,
       this);
@@ -128,7 +123,7 @@ gmf.MobileBackgroundLayerSelectorController = function(
 gmf.MobileBackgroundLayerSelectorController.prototype.setLayer = function(
     layer) {
   this.bgLayer = layer;
-  this.backgroundLayerMgr_.set(this.map_, layer);
+  this.backgroundLayerMgr_.set(this.map, layer);
 };
 
 
