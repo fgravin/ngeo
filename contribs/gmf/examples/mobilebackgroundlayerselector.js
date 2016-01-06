@@ -32,11 +32,13 @@ app.module.constant(
 
 /**
  * @param {gmf.Themes} gmfThemes Themes service.
+ * @param {string} treeUrl URL to "themes" web service.
  * @constructor
  * @ngInject
  */
-app.MainController = function(gmfThemes) {
+app.MainController = function(gmfThemes, treeUrl) {
 
+  gmfThemes.init(treeUrl);
   gmfThemes.loadThemes();
 
   /**

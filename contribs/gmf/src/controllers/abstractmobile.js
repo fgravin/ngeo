@@ -15,8 +15,6 @@ goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.Themes');
-goog.require('gmf.mapDirective');
 goog.require('gmf.mobileBackgroundLayerSelectorDirective');
 goog.require('gmf.mobileNavDirective');
 /** @suppress {extraRequire} */
@@ -57,6 +55,7 @@ gmfModule.constant(
  * @param {angular.Scope} $scope Scope.
  * @param {ngeo.GetBrowserLanguage} ngeoGetBrowserLanguage
  * @param {gmf.Themes} gmfThemes Themes service.
+ * @param {string} treeUrl URL to "themes" web service.
  * @constructor
  * @ngInject
  * @export

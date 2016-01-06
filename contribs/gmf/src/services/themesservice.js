@@ -12,7 +12,6 @@ goog.require('goog.asserts');
 goog.require('goog.events.EventTarget');
 goog.require('ol.format.WMTSCapabilities');
 goog.require('ol.layer.Tile'); // tmp
-goog.require('ol.source.OSM'); // tmp
 goog.require('ol.source.WMTS');
 
 
@@ -61,7 +60,6 @@ gmf.Themes = function($http, gmfTreeUrl, $q) {
   this.$q_ = $q;
 
   /**
-   * @type {string}
    * @type {angular.$http}
    * @private
    */
