@@ -80,6 +80,7 @@ help:
 	@echo "- lint                    Check the code with the linter"
 	@echo "- dist                    Compile the lib into an ngeo.js standalone build (in dist/)"
 	@echo "- gh-pages                Update the GitHub pages"
+	@echo "- test-coverage           Generates a test coverage report in the coverage folder"
 	@echo
 
 .PHONY: apidoc
@@ -106,6 +107,10 @@ lint: .build/python-venv/bin/gjslint .build/node_modules.timestamp .build/gjslin
 .PHONY: test
 test: .build/ol-deps.js .build/ngeo-deps.js .build/gmf-deps.js .build/templatecache.js .build/gmftemplatecache.js .build/node_modules.timestamp
 	./node_modules/karma/bin/karma start karma-conf.js --single-run
+
+.PHONY: test-coverage
+test-coverage: .build/ol-deps.js .build/ngeo-deps.js .build/gmf-deps.js .build/templatecache.js .build/gmftemplatecache.js .build/node_modules.timestamp
+	./node_modules/karma/bin/karma start karma-coverage-conf.js --single-run
 
 .PHONY: serve
 serve: .build/node_modules.timestamp

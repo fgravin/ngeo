@@ -3,5 +3,6 @@
 /examples/simple.min.js
 /dist
 /contribs/gmf/build
++/coverage/
 *.pyc
 .*.swp
