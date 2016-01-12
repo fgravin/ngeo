@@ -16,6 +16,7 @@ goog.require('gmf.Themes');
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.mobileBackgroundLayerSelectorDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.mobileNavDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.proj.EPSG21781');
@@ -30,8 +31,6 @@ goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.control.ScaleLine');
 goog.require('ol.control.Zoom');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
@@ -46,6 +45,7 @@ gmfModule.constant(
         'version=2&background=background');
 
 
+
 /**
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
@@ -55,7 +55,6 @@ gmfModule.constant(
  * @param {angular.Scope} $scope Scope.
  * @param {ngeo.GetBrowserLanguage} ngeoGetBrowserLanguage
  * @param {gmf.Themes} gmfThemes Themes service.
- * @param {string} treeUrl URL to "themes" web service.
  * @constructor
  * @ngInject
  * @export

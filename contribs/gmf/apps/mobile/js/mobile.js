@@ -11,8 +11,8 @@ goog.provide('app.MobileController');
 goog.provide('app_mobile');
 
 goog.require('app');
-goog.require('gmf.Themes');
 goog.require('gmf.AbstractMobileController');
+goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
 goog.require('gmf.authenticationDirective');
 /** @suppress {extraRequire} */

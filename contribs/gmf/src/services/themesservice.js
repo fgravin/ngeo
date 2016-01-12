@@ -48,12 +48,6 @@ gmf.Themes = function($http, gmfTreeUrl, $q) {
   goog.base(this);
 
   /**
-   * @type {boolean}
-   * @private
-   */
-  this.initialized_ = false;
-
-  /**
    * @type {angular.$q}
    * @private
    */
