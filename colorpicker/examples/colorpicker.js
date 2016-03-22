@@ -62,28 +62,11 @@ app.module.controller('AppColorpickerController',
 app.MainController = function($scope) {
 
   /**
-   * @type {ol.Map}
-   * @export
-   */
-  this.map = new ol.Map({
-    layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
-      })
-    ],
-    view: new ol.View({
-      center: [-10635142.37, 4813698.29],
-      zoom: 1,
-      maxZoom: 4
-    })
-  });
-
-  /**
    * Active color.
    * @type {string}
+   * @export
    */
   this.color = 'red';
-
 
 };
 
