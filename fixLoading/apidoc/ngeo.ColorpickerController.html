@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: MeasureEvent</title>
+    <title>JSDoc: Class: ColorpickerController <small>controller:NgeoScaleselectorController</small></title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: MeasureEvent</h1>
+    <h1 class="page-title">Class: ColorpickerController <small>controller:NgeoScaleselectorController</small></h1>
 
     
 
@@ -28,12 +28,9 @@
 
 <header>
     
-        <h2 id="MeasureEvent">
-            <span class="ancestors">ngeo.</span>MeasureEvent
+        <h2 id="ColorpickerController">
+            <span class="ancestors">ngeo.</span>ColorpickerController
         </h2>
-        
-            <div class="class-description"><p>Events emitted by <code>ngeo.interaction.Interaction</code> instances are
-instances of this type.</p></div>
         
     
 </header>
@@ -44,10 +41,8 @@ instances of this type.</p></div>
         
 
     
-    <h2>Constructor</h2>
-    
 
-    <h4 class="name" id="MeasureEvent"><span class="type-signature"></span>new MeasureEvent<span class="signature">(type, feature)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="ColorpickerController"><span class="type-signature"></span>new ColorpickerController<span class="signature">($scope, $element, $attrs)</span><span class="type-signature"></span></h4>
 
     
 
@@ -86,13 +81,13 @@ instances of this type.</p></div>
 
         <tr>
             
-                <td class="name"><code>type</code></td>
+                <td class="name"><code>$scope</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><a href="ngeo.html#MeasureEventType">ngeo.MeasureEventType</a></span>
+<span class="param-type"><a href="https://docs.angularjs.org/guide/scope">angular.Scope</a></span>
 
 
             
@@ -102,20 +97,20 @@ instances of this type.</p></div>
 
             
 
-            <td class="description last"><p>Type.</p></td>
+            <td class="description last"><p>Directive scope.</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>feature</code></td>
+                <td class="name"><code>$element</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><a href="http://openlayers.org/en/master/apidoc/ol.Feature.html">ol.Feature</a></span>
+<span class="param-type">angular.JQLite</span>
 
 
             
@@ -125,7 +120,30 @@ instances of this type.</p></div>
 
             
 
-            <td class="description last"><p>The feature drawn.</p></td>
+            <td class="description last"><p>Element.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>$attrs</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">angular.Attributes</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Attributes.</p></td>
         </tr>
 
     
@@ -152,13 +170,6 @@ instances of this type.</p></div>
     
 
     
-    <dt class="implements">Implements:</dt>
-    <dd class="implements"><ul>
-        
-            <li><a href="ngeox.MeasureEvent.html">ngeox.MeasureEvent</a></li>
-        
-    </ul></dd>
-    
 
     
 
@@ -176,8 +187,8 @@ instances of this type.</p></div>
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
     
-        <a href="https://github.com/camptocamp/ngeo/blob/master/src/ol-ext/interaction/measure.js">src/ol-ext/interaction/measure.js</a>,
-        <a href="https://github.com/camptocamp/ngeo/blob/master/src/ol-ext/interaction/measure.js#L59">line 59</a>
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/directives/colorpicker.js">src/directives/colorpicker.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/directives/colorpicker.js#L74">line 74</a>
     </li></ul></dd>
     
 
@@ -207,17 +218,6 @@ instances of this type.</p></div>
     </div>
 
     
-        <h3 class="subsection-title">Extends</h3>
-
-        
-
-
-    <ul>
-        <li><a href="http://openlayers.org/en/master/apidoc/ol.events.Event.html">ol.events.Event</a></li>
-    </ul>
-
-
-    
 
     
 
@@ -232,13 +232,13 @@ instances of this type.</p></div>
 
         
             
-<h4 class="name" id="feature"><span class="type-signature"></span>feature<span class="type-signature"> :<a href="http://openlayers.org/en/master/apidoc/ol.Feature.html">ol.Feature</a></span></h4>
+<h4 class="name" id="color"><span class="type-signature"></span>color<span class="type-signature"> :<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a>|<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></h4>
 
 
 
 
 <div class="description">
-    <p>The feature being drawn.</p>
+    <p>The selected color</p>
 </div>
 
 
@@ -247,7 +247,10 @@ instances of this type.</p></div>
     <ul>
         <li>
             
-<span class="param-type"><a href="http://openlayers.org/en/master/apidoc/ol.Feature.html">ol.Feature</a></span>
+<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></span>
+|
+
+<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>
 
 
         </li>
@@ -270,12 +273,79 @@ instances of this type.</p></div>
     
 
     
-    <dt class="implements">Implements:</dt>
-    <dd class="implements"><ul>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/directives/colorpicker.js">src/directives/colorpicker.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/directives/colorpicker.js#L87">line 87</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
         
-            <li><a href="ngeox.MeasureEvent.html#feature">ngeox.MeasureEvent#feature</a></li>
-        
-    </ul></dd>
+            
+<h4 class="name" id="colors"><span class="type-signature"></span>colors<span class="type-signature"> :<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>.&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>.&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>>></span></h4>
+
+
+
+
+<div class="description">
+    <p>The set of color</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>.&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>.&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>>></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
     
 
     
@@ -294,8 +364,8 @@ instances of this type.</p></div>
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
     
-        <a href="https://github.com/camptocamp/ngeo/blob/master/src/ol-ext/interaction/measure.js">src/ol-ext/interaction/measure.js</a>,
-        <a href="https://github.com/camptocamp/ngeo/blob/master/src/ol-ext/interaction/measure.js#L68">line 68</a>
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/directives/colorpicker.js">src/directives/colorpicker.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/directives/colorpicker.js#L81">line 81</a>
     </li></ul></dd>
     
 
@@ -315,26 +385,19 @@ instances of this type.</p></div>
     
 
     
-
-    
-
-    
-        <h3 class="subsection-title">Events</h3>
+        <h3 class="subsection-title">Methods</h3>
 
         
             
 
     
 
-    <h4 class="name" id="event:measureend">measureend</h4>
+    <h4 class="name" id="setColor"><span class="type-signature"></span>setColor<span class="signature">(color)</span><span class="type-signature"></span></h4>
 
     
 
 
 
-<div class="description">
-    <p>Triggered upon feature draw end</p>
-</div>
 
 
 
@@ -342,6 +405,54 @@ instances of this type.</p></div>
 
 
 
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>color</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The color to select.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -380,8 +491,8 @@ instances of this type.</p></div>
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
     
-        <a href="https://github.com/camptocamp/ngeo/blob/master/src/ol-ext/interaction/measure.js">src/ol-ext/interaction/measure.js</a>,
-        <a href="https://github.com/camptocamp/ngeo/blob/master/src/ol-ext/interaction/measure.js#L40">line 40</a>
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/directives/colorpicker.js">src/directives/colorpicker.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/directives/colorpicker.js#L95">line 95</a>
     </li></ul></dd>
     
 
@@ -408,6 +519,10 @@ instances of this type.</p></div>
 
 
         
+    
+
+    
+
     
 </article>
 
