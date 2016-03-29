@@ -13,20 +13,55 @@
         padding: 10px;
       }
       .palette {
-        border-collapse: collapse;
-        display: inline-block;
         padding-left: 20px;
+        border-collapse: separate;
+        border-spacing: 0px;
+      }
+      .palette tr {
+        cursor: default;
       }
       .palette td {
-        height: 14px;
-        width: 14px;
+        position: relative;
+        padding: 0px;
+        text-align: center;
+        vertical-align: middle;
+        font-size: 1px;
         cursor: pointer;
       }
-      .palette td.selected {
-        background: transparent;
-        -webkit-box-shadow: 0 1px 4px #000,inset 0 0 3px #fff;
-        box-shadow: 0 1px 4px #000,inset 0 0 3px #fff;
+      .palette td > div {
         position: relative;
+        height: 12px;
+        width: 12px;
+        border: 1px solid #fff;
+        box-sizing: content-box;
+      }
+      .palette td:hover > div::after {
+        display: block;
+        content: '';
+        background: inherit;
+        position: absolute;
+        width: 28px;
+        height: 28px;
+        top: -10px;
+        left: -10px;
+        border: 2px solid #fff;
+        -webkit-box-shadow: rgba(0,0,0,0.3) 0 1px 3px 0;
+        -webkit-box-shadow: rgba(0,0,0,0.3) 0 1px 3px 0;
+        box-shadow: rgba(0,0,0,0.3) 0 1px 3px 0;
+        z-index: 11;
+      }
+      .palette td.selected > div::after {
+        border: 2px solid #444;
+        margin: 0;
+        content: '';
+        display: block;
+        width: 14px;
+        height: 14px;
+        position: absolute;
+        left: -3px;
+        top: -3px;
+        box-sizing: content-box;
+        z-index: 10;
       }
     </style>
   </head>
@@ -35,8 +70,9 @@
     <label>
       Select color:
       <app-colorpicker></app-colorpicker>
-      Color: {{mainCtrl.color}}
     </label>
+    Color: {{mainCtrl.color}}
+    <div ngeo-colorpicker="" ngeo-colorpicker-color=""></div>
     <div>
       <p id="desc">This example shows how to write an application-specific directive (<code>app-colorpicker</code>) based on <code>ngeo-colorpicker</code>to create a color picker.</p>
     </div>
