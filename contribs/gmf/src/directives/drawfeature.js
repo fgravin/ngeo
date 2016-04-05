@@ -143,9 +143,6 @@ gmf.DrawfeatureController = function($scope, $compile, $sce, gettext,
 
   var drawPoint = this.drawPoint;
   this.interactions_.push(drawPoint);
-  drawPoint.setActive(false);
-  ngeoDecorateInteraction(drawPoint);
-  this.map.addInteraction(drawPoint);
   ol.events.listen(drawPoint, ol.interaction.DrawEventType.DRAWEND,
       this.handleDrawEnd_.bind(this, geomType.POINT), this);
   ol.events.listen(drawPoint,
@@ -171,9 +168,6 @@ gmf.DrawfeatureController = function($scope, $compile, $sce, gettext,
 
   var measureLength = this.measureLength;
   this.interactions_.push(measureLength);
-  measureLength.setActive(false);
-  ngeoDecorateInteraction(measureLength);
-  this.map.addInteraction(measureLength);
   ol.events.listen(measureLength, ngeo.MeasureEventType.MEASUREEND,
       this.handleDrawEnd_.bind(this, geomType.LINESTRING), this);
   ol.events.listen(measureLength,
@@ -199,9 +193,6 @@ gmf.DrawfeatureController = function($scope, $compile, $sce, gettext,
 
   var measureArea = this.measureArea;
   this.interactions_.push(measureArea);
-  measureArea.setActive(false);
-  ngeoDecorateInteraction(measureArea);
-  this.map.addInteraction(measureArea);
   ol.events.listen(measureArea, ngeo.MeasureEventType.MEASUREEND,
       this.handleDrawEnd_.bind(this, geomType.POLYGON), this);
   ol.events.listen(measureArea,
@@ -226,9 +217,6 @@ gmf.DrawfeatureController = function($scope, $compile, $sce, gettext,
 
   var measureAzimut = this.measureAzimut;
   this.interactions_.push(measureAzimut);
-  measureAzimut.setActive(false);
-  ngeoDecorateInteraction(measureAzimut);
-  this.map.addInteraction(measureAzimut);
   ol.events.listen(measureAzimut, ngeo.MeasureEventType.MEASUREEND,
       /**
        * @param {ngeo.MeasureEvent} event Event.
@@ -271,9 +259,6 @@ gmf.DrawfeatureController = function($scope, $compile, $sce, gettext,
 
   var drawRectangle = this.drawRectangle;
   this.interactions_.push(drawRectangle);
-  drawRectangle.setActive(false);
-  ngeoDecorateInteraction(drawRectangle);
-  this.map.addInteraction(drawRectangle);
   ol.events.listen(drawRectangle, ol.interaction.DrawEventType.DRAWEND,
       this.handleDrawEnd_.bind(this, geomType.RECTANGLE), this);
   ol.events.listen(drawRectangle,
@@ -293,14 +278,19 @@ gmf.DrawfeatureController = function($scope, $compile, $sce, gettext,
 
   var drawText = this.drawText;
   this.interactions_.push(drawText);
-  drawText.setActive(false);
-  ngeoDecorateInteraction(drawText);
-  this.map.addInteraction(drawText);
   ol.events.listen(drawText, ol.interaction.DrawEventType.DRAWEND,
       this.handleDrawEnd_.bind(this, geomType.TEXT), this);
   ol.events.listen(drawText,
       ol.Object.getChangeEventType(ol.interaction.InteractionProperty.ACTIVE),
       this.handleActiveChange_, this);
+
+
+  // setActive, decorate and add interaction
+  this.interactions_.forEach(function(interaction) {
+    interaction.setActive(false);
+    ngeoDecorateInteraction(interaction);
+    this.map.addInteraction(interaction);
+  }, this);
 
 
   // Watch the "active" property, and disable the draw interactions
