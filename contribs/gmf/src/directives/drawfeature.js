@@ -56,14 +56,14 @@ gmf.module.directive('gmfDrawfeature', gmf.drawfeatureDirective);
  * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service.
  * @param {ngeo.FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
- * @param {ol.Collection.<ol.Feature>} gmfFeatures Collection of features.
+ * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
  * @constructor
  * @ngInject
  * @ngdoc controller
  * @ngname GmfDrawfeatureController
  */
 gmf.DrawfeatureController = function($scope, $compile, $sce, gettext,
-    gettextCatalog, ngeoDecorateInteraction, ngeoFeatureHelper, gmfFeatures) {
+    gettextCatalog, ngeoDecorateInteraction, ngeoFeatureHelper, ngeoFeatures) {
 
   /**
    * @type {ol.Map}
@@ -97,7 +97,7 @@ gmf.DrawfeatureController = function($scope, $compile, $sce, gettext,
    * @type {ol.Collection.<ol.Feature>}
    * @private
    */
-  this.features_ = gmfFeatures;
+  this.features_ = ngeoFeatures;
 
   /**
    * @type {Object}

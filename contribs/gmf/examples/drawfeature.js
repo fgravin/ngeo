@@ -1,8 +1,8 @@
 goog.provide('gmf-drawfeature');
 
-goog.require('gmf.Features');
 goog.require('gmf.drawfeatureDirective');
 goog.require('gmf.mapDirective');
+goog.require('ngeo.Features');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
 goog.require('ol.Map');
@@ -21,12 +21,12 @@ app.module = angular.module('app', ['gmf']);
 
 /**
  * @param {!angular.Scope} $scope Angular scope.
+ * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
  * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
- * @param {ol.Collection.<ol.Feature>} gmfFeatures Collection of features.
  * @constructor
  */
-app.MainController = function($scope, ngeoToolActivateMgr, gmfFeatures) {
+app.MainController = function($scope, ngeoFeatures, ngeoToolActivateMgr) {
 
   /**
    * @type {!angular.Scope}
@@ -37,7 +37,7 @@ app.MainController = function($scope, ngeoToolActivateMgr, gmfFeatures) {
   var vector = new ol.layer.Vector({
     source: new ol.source.Vector({
       wrapX: false,
-      features: gmfFeatures
+      features: ngeoFeatures
     })
   });
 
