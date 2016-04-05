@@ -316,12 +316,9 @@ gmf.DrawfeatureController = function($scope, $compile, $sce, gettext,
  * @private
  */
 gmf.DrawfeatureController.prototype.handleActiveChange_ = function(event) {
-  var active;
-  this.interactions_.some(function(interaction) {
-    active = interaction.getActive();
-    return active;
+  this.active = this.interactions_.some(function(interaction) {
+    return interaction.getActive();
   }, this);
-  this.active = active;
 };
 
 
