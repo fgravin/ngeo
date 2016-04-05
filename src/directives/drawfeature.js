@@ -1,7 +1,7 @@
-goog.provide('gmf.DrawfeatureController');
-goog.provide('gmf.drawfeatureDirective');
+goog.provide('ngeo.DrawfeatureController');
+goog.provide('ngeo.drawfeatureDirective');
 
-goog.require('gmf');
+goog.require('ngeo');
 goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.FeatureHelper');
 /** @suppress {extraRequire} */
@@ -20,31 +20,31 @@ goog.require('ol.style.Style');
  * Directive used to draw vector features on a map.
  * Example:
  *
- *     <gmf-drawfeature
- *       gmf-drawfeature-active="ctrl.drawActive"
- *       gmf-drawfeature-map="::ctrl.map">
- *     </gmf-drawfeature>
+ *     <ngeo-drawfeature
+ *       ngeo-drawfeature-active="ctrl.drawActive"
+ *       ngeo-drawfeature-map="::ctrl.map">
+ *     </ngeo-drawfeature>
  *
- * @htmlAttribute {ol.Map} gmf-drawfeature-map The map.
+ * @htmlAttribute {ol.Map} ngeo-drawfeature-map The map.
  * @return {angular.Directive} The directive specs.
  * @ngInject
  * @ngdoc directive
- * @ngname gmfDrawfeature
+ * @ngname ngeoDrawfeature
  */
-gmf.drawfeatureDirective = function() {
+ngeo.drawfeatureDirective = function() {
   return {
-    controller: 'GmfDrawfeatureController',
+    controller: 'ngeoDrawfeatureController',
     scope: {
-      'active': '=gmfDrawfeatureActive',
-      'map': '=gmfDrawfeatureMap'
+      'active': '=ngeoDrawfeatureActive',
+      'map': '=ngeoDrawfeatureMap'
     },
     bindToController: true,
-    controllerAs: 'dfCtrl',
-    templateUrl: gmf.baseTemplateUrl + '/drawfeature.html'
+    controllerAs: 'dfCtrl'//,
+    //templateUrl: ngeo.baseTemplateUrl + '/drawfeature.html'
   };
 };
 
-gmf.module.directive('gmfDrawfeature', gmf.drawfeatureDirective);
+ngeo.module.directive('ngeoDrawfeature', ngeo.drawfeatureDirective);
 
 
 /**
@@ -55,14 +55,14 @@ gmf.module.directive('gmfDrawfeature', gmf.drawfeatureDirective);
  * @param {angularGettext.Catalog} gettextCatalog Gettext service.
  * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service.
- * @param {ngeo.FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
+ * @param {ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
  * @constructor
  * @ngInject
  * @ngdoc controller
- * @ngname GmfDrawfeatureController
+ * @ngname ngeoDrawfeatureController
  */
-gmf.DrawfeatureController = function($scope, $compile, $sce, gettext,
+ngeo.DrawfeatureController = function($scope, $compile, $sce, gettext,
     gettextCatalog, ngeoDecorateInteraction, ngeoFeatureHelper, ngeoFeatures) {
 
   /**
@@ -315,7 +315,7 @@ gmf.DrawfeatureController = function($scope, $compile, $sce, gettext,
  * @param {ol.ObjectEvent} event Event.
  * @private
  */
-gmf.DrawfeatureController.prototype.handleActiveChange_ = function(event) {
+ngeo.DrawfeatureController.prototype.handleActiveChange_ = function(event) {
   this.active = this.interactions_.some(function(interaction) {
     return interaction.getActive();
   }, this);
@@ -329,7 +329,7 @@ gmf.DrawfeatureController.prototype.handleActiveChange_ = function(event) {
  * @param {ol.interaction.DrawEvent|ngeo.MeasureEvent} event Event.
  * @private
  */
-gmf.DrawfeatureController.prototype.handleDrawEnd_ = function(type, event) {
+ngeo.DrawfeatureController.prototype.handleDrawEnd_ = function(type, event) {
   var feature = event.feature;
 
   var prop = ngeo.FeatureProperties;
@@ -372,4 +372,4 @@ gmf.DrawfeatureController.prototype.handleDrawEnd_ = function(type, event) {
   this.features_.push(feature);
 };
 
-gmf.module.controller('GmfDrawfeatureController', gmf.DrawfeatureController);
+ngeo.module.controller('ngeoDrawfeatureController', ngeo.DrawfeatureController);

@@ -1,10 +1,10 @@
-goog.provide('gmf-drawfeature');
+goog.provide('drawfeature');
 
-goog.require('gmf.drawfeatureDirective');
-goog.require('gmf.mapDirective');
 goog.require('ngeo.Features');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
+goog.require('ngeo.drawfeatureDirective');
+goog.require('ngeo.mapDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -16,7 +16,7 @@ var app = {};
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['gmf']);
+app.module = angular.module('app', ['ngeo']);
 
 
 /**

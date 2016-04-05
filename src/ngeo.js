@@ -5,7 +5,7 @@ goog.provide('ngeo');
 
 
 /** @type {!angular.Module} */
-ngeo.module = angular.module('ngeo', []);
+ngeo.module = angular.module('ngeo', ['gettext']);
 
 
 /**
