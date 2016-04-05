@@ -26,12 +26,13 @@ goog.require('ol.style.Style');
  *     </ngeo-drawfeature>
  *
  * @htmlAttribute {ol.Map} ngeo-drawfeature-map The map.
+ * @param {angular.$compile} $compile Angular compile service.
  * @return {angular.Directive} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawfeature
  */
-ngeo.drawfeatureDirective = function() {
+ngeo.drawfeatureDirective = function($compile) {
   return {
     controller: 'ngeoDrawfeatureController',
     scope: {
@@ -39,8 +40,39 @@ ngeo.drawfeatureDirective = function() {
       'map': '=ngeoDrawfeatureMap'
     },
     bindToController: true,
-    controllerAs: 'dfCtrl'//,
-    //templateUrl: ngeo.baseTemplateUrl + '/drawfeature.html'
+    controllerAs: 'dfCtrl',
+    /*eslint-disable */
+    compile:
+        /**
+         * @param {angular.JQLite} tElement Template element.
+         * @param {angular.Attributes} tAttrs Template attributes.
+         * @return {Function} Post-link function.
+         */
+        function(tElement, tAttrs) {
+          var contents = tElement.contents().remove();
+          var compiledContents;
+          return (
+              /**
+               * Post-link function.
+               * @param {!angular.Scope} scope Scope.
+               * @param {angular.JQLite} iElement Instance element.
+               * @param {angular.Attributes} iAttrs Instance attributes.
+               */
+              function(scope, iElement, iAttrs) {
+                if (!compiledContents) {
+                  compiledContents = $compile(contents);
+                }
+                compiledContents(scope,
+                    /**
+                     * @param {Object} clone Clone element.
+                     */
+                    function(clone) {
+                      var cloneElement = /** @type {angular.JQLite} */ (clone);
+                      iElement.append(cloneElement);
+                    });
+              });
+        }
+    /*eslint-enable */
   };
 };
 
