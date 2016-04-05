@@ -150,7 +150,7 @@ gmf.DrawfeatureController = function($scope, $compile, $sce, gettext,
       this.handleActiveChange_, this);
 
 
-  // === LENGTH / LINESTRING ===
+  // === LENGTH / LINE_STRING ===
 
   var helpMsg = gettext('Click to start drawing length');
   var contMsg = gettext('Click to continue drawing<br/>' +
@@ -169,7 +169,7 @@ gmf.DrawfeatureController = function($scope, $compile, $sce, gettext,
   var measureLength = this.measureLength;
   this.interactions_.push(measureLength);
   ol.events.listen(measureLength, ngeo.MeasureEventType.MEASUREEND,
-      this.handleDrawEnd_.bind(this, geomType.LINESTRING), this);
+      this.handleDrawEnd_.bind(this, geomType.LINE_STRING), this);
   ol.events.listen(measureLength,
       ol.Object.getChangeEventType(ol.interaction.InteractionProperty.ACTIVE),
       this.handleActiveChange_, this);
@@ -337,41 +337,30 @@ gmf.DrawfeatureController.prototype.handleDrawEnd_ = function(type, event) {
 
   var prop = ngeo.FeatureProperties;
 
-  /**
-   * @type {string}
-   */
-  var name;
   switch (type) {
     case ngeo.GeometryType.CIRCLE:
-      name = this.gettextCatalog_.getString('Circle');
-
       var featureGeom = /** @type {ol.geom.Circle} */ (feature.getGeometry());
       feature.setGeometry(
           ol.geom.Polygon.fromCircle(featureGeom, 64)
       );
       feature.set(prop.IS_CIRCLE, true);
       break;
-    case ngeo.GeometryType.POINT:
-      name = this.gettextCatalog_.getString('Point');
-      break;
-    case 'text':
-      name = this.gettextCatalog_.getString('Text');
+    case ngeo.GeometryType.TEXT:
       feature.set(prop.IS_TEXT, true);
       break;
-    case ngeo.GeometryType.LINESTRING:
-      name = this.gettextCatalog_.getString('LineString');
-      break;
-    case ngeo.GeometryType.POLYGON:
-      name = this.gettextCatalog_.getString('Polygon');
-      break;
     case ngeo.GeometryType.RECTANGLE:
-      name = this.gettextCatalog_.getString('Rectangle');
       feature.set(prop.IS_RECTANGLE, true);
       break;
     default:
       break;
   }
+
+  /**
+   * @type {string}
+   */
+  var name = this.gettextCatalog_.getString(type);
   feature.set(prop.NAME, name + ' ' + (this.features_.getLength() + 1));
+
   feature.set(prop.ANGLE, 0);
   feature.set(prop.COLOR, '#ed1c24');
   feature.set(prop.OPACITY, 0.2);
