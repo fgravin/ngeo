@@ -26,53 +26,20 @@ goog.require('ol.style.Style');
  *     </ngeo-drawfeature>
  *
  * @htmlAttribute {ol.Map} ngeo-drawfeature-map The map.
- * @param {angular.$compile} $compile Angular compile service.
  * @return {angular.Directive} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawfeature
  */
-ngeo.drawfeatureDirective = function($compile) {
+ngeo.drawfeatureDirective = function() {
   return {
     controller: 'ngeoDrawfeatureController',
-    scope: {
+    scope: true,
+    bindToController: {
       'active': '=ngeoDrawfeatureActive',
       'map': '=ngeoDrawfeatureMap'
     },
-    bindToController: true,
-    controllerAs: 'dfCtrl',
-    /*eslint-disable */
-    compile:
-        /**
-         * @param {angular.JQLite} tElement Template element.
-         * @param {angular.Attributes} tAttrs Template attributes.
-         * @return {Function} Post-link function.
-         */
-        function(tElement, tAttrs) {
-          var contents = tElement.contents().remove();
-          var compiledContents;
-          return (
-              /**
-               * Post-link function.
-               * @param {!angular.Scope} scope Scope.
-               * @param {angular.JQLite} iElement Instance element.
-               * @param {angular.Attributes} iAttrs Instance attributes.
-               */
-              function(scope, iElement, iAttrs) {
-                if (!compiledContents) {
-                  compiledContents = $compile(contents);
-                }
-                compiledContents(scope,
-                    /**
-                     * @param {Object} clone Clone element.
-                     */
-                    function(clone) {
-                      var cloneElement = /** @type {angular.JQLite} */ (clone);
-                      iElement.append(cloneElement);
-                    });
-              });
-        }
-    /*eslint-enable */
+    controllerAs: 'dfCtrl'
   };
 };
 
@@ -162,25 +129,6 @@ ngeo.DrawfeatureController = function($scope, $compile, $sce, gettext,
   this.interactions_ = [];
 
   var geomType = ngeo.GeometryType;
-
-  // === POINT ===
-
-  /**
-   * @type {ol.interaction.Draw}
-   * @export
-   */
-  this.drawPoint = new ol.interaction.Draw({
-    type: ol.geom.GeometryType.POINT
-  });
-
-  var drawPoint = this.drawPoint;
-  this.interactions_.push(drawPoint);
-  ol.events.listen(drawPoint, ol.interaction.DrawEventType.DRAWEND,
-      this.handleDrawEnd_.bind(this, geomType.POINT), this);
-  ol.events.listen(drawPoint,
-      ol.Object.getChangeEventType(ol.interaction.InteractionProperty.ACTIVE),
-      this.handleActiveChange_, this);
-
 
   // === LENGTH / LINE_STRING ===
 
@@ -405,3 +353,49 @@ ngeo.DrawfeatureController.prototype.handleDrawEnd_ = function(type, event) {
 };
 
 ngeo.module.controller('ngeoDrawfeatureController', ngeo.DrawfeatureController);
+
+
+/**
+ * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
+ *     interaction service.
+ * @return {angular.Directive} The directive specs.
+ * @ngInject
+ * @ngdoc directive
+ * @ngname ngeoDrawpoint
+ */
+ngeo.drawPointDirective = function(ngeoDecorateInteraction) {
+  return {
+    restrict: 'A',
+    require: '^^ngeoDrawfeature',
+    /**
+     * @param {!angular.Scope} scope Scope.
+     * @param {angular.JQLite} element Element.
+     * @param {angular.Attributes} attrs Attributes.
+     * @param {ngeo.DrawfeatureController} drawFeatureCtrl Controller.
+     */
+    link: function(scope, element, attrs, drawFeatureCtrl) {
+      var geomType = ngeo.GeometryType;
+      drawFeatureCtrl.drawPoint = new ol.interaction.Draw({
+        type: ol.geom.GeometryType.POINT
+      });
+
+      //TODO: do a register interaction in drawFeatureCtrl
+      var drawPoint = drawFeatureCtrl.drawPoint;
+      drawFeatureCtrl.interactions_.push(drawPoint);
+      drawPoint.setActive(false);
+      ngeoDecorateInteraction(drawPoint);
+      drawFeatureCtrl.map.addInteraction(drawPoint);
+
+      ol.events.listen(drawPoint, ol.interaction.DrawEventType.DRAWEND,
+          drawFeatureCtrl.handleDrawEnd_.bind(drawFeatureCtrl, geomType.POINT), drawFeatureCtrl);
+      ol.events.listen(drawPoint,
+          ol.Object.getChangeEventType(ol.interaction.InteractionProperty.ACTIVE),
+          drawFeatureCtrl.handleActiveChange_, drawFeatureCtrl);
+    }
+  };
+};
+
+ngeo.module.controller('ngeoDrawfeatureController', ngeo.DrawfeatureController);
+
+
+ngeo.module.directive('ngeoDrawpoint', ngeo.drawPointDirective);
